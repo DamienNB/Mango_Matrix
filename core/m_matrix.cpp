@@ -39,17 +39,17 @@ int main()
 	*/
 	while (1);
 }
-/*
+
 template <typename T>
 mango_matrix<T>::mango_matrix()
 {
   static_assert(std::is_arithmetic<T>(),
 				"mango_matrix requires arithmetic types");
 }
-*/
+/*
 template <typename T>
 mango_matrix<T>::mango_matrix(std::initializer_list<T> l,
-	bool is_column_vector)
+	bool is_column_vector) : mango_matrix()
 {
 	if (is_column_vector)
 		matrix_type = m_type::column_vector;
@@ -58,17 +58,33 @@ mango_matrix<T>::mango_matrix(std::initializer_list<T> l,
 
 	one_d.assign(l);
 }
-/*
+*/
 template <typename T>
-mango_matrix<T>::mango_matrix(T one_dimensional_array[], size_t length,
-							  bool is_column_vector)
+mango_matrix<T>::mango_matrix(T mathematical_vector[], size_t length,
+							  bool is_column_vector) : mango_matrix()
 {
-  size_t &array[length] one_d_array = one_dimensional_array;
+	one_d.assign(mathematical_vector, mathematical_vector + length*sizeof(T));
+
+	if(is_column_vector)
+		matrix_type = m_type::column_vector;
+	else
+		matrix_type = m_type::row_vector;
+}
+/*
+template<typename T, size_t array_size>
+mango_matrix<T>::mango_matrix(std::array<T, array_size> mathematical_vector, 
+							  bool is_column_vector) : mango_matrix()
+{
+	one_d.assign(mathematical_vector.begin(), mathematical_vector.end());
+	if(is_column_vector)
+		matrix_type = m_type::column_vector;
+	else
+		matrix_type = m_type::row_vector;
 }
 */
-
 template <typename T>
-mango_matrix<T>::mango_matrix(size_t num_columns, size_t num_rows, T value)
+mango_matrix<T>::mango_matrix(size_t num_columns, size_t num_rows, T value) : 
+	mango_matrix()
 {
 	if (num_columns == 1)
 	{

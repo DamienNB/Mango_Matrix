@@ -18,14 +18,17 @@ template <typename T>
 class mango_matrix
 {
 public:
-	// TODO: Reinclude the static_assert of arithmetic types somewhere
-	//mango_matrix(); // TODO: decide on a default empty constructor
-	mango_matrix(std::initializer_list<T> l, bool is_column_vector);
-	/*
+	// The empty constructor should be utilized by all other constructors
+	mango_matrix(); // TODO: determine if more needed in empty constructor
+
+//	mango_matrix(std::initializer_list<T> l, bool is_column_vector);
+	
 	mango_matrix(T one_dimensional_array[], size_t length, bool is_column_vector);
-	template <typename N>
-	mango_matrix(std::array<T,N> one_dimensional_array, bool is_column_vector);
-	*/
+	
+	template<size_t array_size>
+	mango_matrix(std::array<T, array_size> mathematical_vector, 
+				 bool is_column_vector);
+	
 	mango_matrix(size_t num_columns, size_t num_rows, T value);
 	/*
 	mango_matrix(T array[][], size_t num_columns, size_t num_rows);
